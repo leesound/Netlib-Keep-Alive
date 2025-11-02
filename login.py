@@ -11,8 +11,8 @@ fail_msgs = [
     "Error with the login: login size should be between 2 and 50 (currently: 1)"
 ]
 
-def login_account(playwright, USER, PWD):
-    print(f"🚀 开始登录账号: {USER}")
+def ensaluta_konto(playwright, UZANTONOMO, PWD):
+    print(f"🚀 开始登录账号: {UZANTONOMO}")
     try:
         browser = playwright.chromium.launch(headless=True)
         context = browser.new_context()
@@ -23,9 +23,9 @@ def login_account(playwright, USER, PWD):
 
         page.get_by_text("Login").click()
         time.sleep(2)
-        page.get_by_role("textbox", name="Username").fill(USER)
+        page.get_by_role("textbox", name="Username").fill(UZANTONOMO)
         time.sleep(2)
-        page.get_by_role("textbox", name="Password").fill(PWD)
+        page.get_by_role("textbox", name="Password").fill(PASVORTO)
         time.sleep(2)
         page.get_by_role("button", name="Validate").click()
         page.wait_for_load_state("networkidle")
@@ -33,7 +33,7 @@ def login_account(playwright, USER, PWD):
 
         success_text = "You are the exclusive owner of the following domains."
         if page.query_selector(f"text={success_text}"):
-            print(f"✅ 账号 {USER} 登录成功")
+            print(f"✅ 账号 {UZANTONOMO} 登录成功")
             time.sleep(5)
         else:
             failed_msg = None
@@ -42,20 +42,20 @@ def login_account(playwright, USER, PWD):
                     failed_msg = msg
                     break
             if failed_msg:
-                print(f"❌ 账号 {USER} 登录失败: {failed_msg}")
+                print(f"❌ 账号 {UZANTONOMO} 登录失败: {failed_msg}")
             else:
-                print(f"❌ 账号 {USER} 登录失败: 未知错误")
+                print(f"❌ 账号 {UZANTONOMO} 登录失败: 未知错误")
 
         context.close()
         browser.close()
 
     except Exception as e:
-        print(f"❌ 账号 {USER} 登录异常: {e}")
+        print(f"❌ 账号 {UZANTONOMO} 登录异常: {e}")
 
-def run():
+def Ruli():
     with sync_playwright() as playwright:
-        login_account(playwright, UZANTONOMO, PASVORTO)
+        ensaluta_konto(playwright, UZANTONOMO, PASVORTO)
         time.sleep(2)
 
 if __name__ == "__main__":
-    run()
+    Ruli()
